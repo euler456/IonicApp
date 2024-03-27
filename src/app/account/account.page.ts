@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { Storage } from '@ionic/storage';
 @Component({
   selector: 'app-account',
   templateUrl: './account.page.html',
@@ -9,12 +9,14 @@ import { ActivatedRoute } from '@angular/router';
 export class AccountPage implements OnInit {
   username: string = '';
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private storage: Storage) { }
 
   ngOnInit() {
-    // Retrieve username parameter from route
-    this.route.params.subscribe(params => {
-      this.username = params['username'];
+    // Retrieve username from storage
+    this.storage.get('username').then((username) => {
+      this.username = username;
+    }).catch(error => {
+      console.error('Error retrieving username from storage:', error);
     });
   }
 }
