@@ -16,13 +16,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- Display list of products with edit button -->
+  <!-- Display list of products with edit and delete buttons -->
   <ion-item *ngFor="let product of products" lines="full">
     <ion-label>{{ product.name }}</ion-label>
     <ion-label>{{ product.id }}</ion-label>
     <ion-label>{{ product.description }}</ion-label>
     <ion-label>{{ product.price }}</ion-label>
     <ion-button (click)="editProduct(product)">Edit</ion-button>
+    <ion-button (click)="deleteProduct(product.id)">Delete</ion-button>
   </ion-item>
 
   <!-- Form to add new products -->

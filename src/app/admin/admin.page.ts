@@ -52,12 +52,12 @@ export class AdminPage {
   deleteProduct(productID: string) {
     // Find index of product with given productID
     const index = this.products.findIndex(product => product.id === productID);
-
+  
     if (index !== -1) {
       // If product with given productID exists, remove it from the array
       this.products.splice(index, 1);
     }
-  }
+  }  
 
   private resetForm() {
     // Reset form fields
