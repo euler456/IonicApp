@@ -18,6 +18,9 @@
 
   <!-- Display list of products with edit and delete buttons -->
   <ion-item *ngFor="let product of products" lines="full">
+    <ion-thumbnail slot="start">
+      <img [src]="product.image" *ngIf="product.image" alt="Product Image">
+    </ion-thumbnail>
     <ion-label>{{ product.name }}</ion-label>
     <ion-label>{{ product.id }}</ion-label>
     <ion-label>{{ product.description }}</ion-label>
@@ -27,6 +30,13 @@
   </ion-item>
 
   <!-- Form to add new products -->
+  <ion-item lines="full">
+    <ion-thumbnail slot="start" *ngIf="imagePreview">
+      <img [src]="imagePreview" alt="Product Image">
+    </ion-thumbnail>
+    <ion-input type="file" (change)="onFileChange($event)" accept="image/*"></ion-input>
+  </ion-item>
+
   <ion-item lines="full">
     <ion-label position="floating">Product Name</ion-label>
     <ion-input type="text" [(ngModel)]="productName"></ion-input>

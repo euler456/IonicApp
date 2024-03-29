@@ -11,6 +11,7 @@ export class AdminPage {
   productID: string = '';
   productDescription: string = '';
   price: number = 0;
+  imagePreview: string=''; // Variable to store image preview URL
 
   products: any[] = [];
 
@@ -21,23 +22,15 @@ export class AdminPage {
       name: this.productName,
       id: this.productID,
       description: this.productDescription,
-      price: this.price
+      price: this.price,
+      image: this.imagePreview // Assign image preview URL to product
     };
 
-    // Check if a product with the same productID already exists
-    const existingProductIndex = this.products.findIndex(product => product.id === this.productID);
-
-    if (existingProductIndex !== -1) {
-      // If product with the same productID exists, replace it with the new product
-      this.products.splice(existingProductIndex, 1, newProduct);
-    } else {
-      // If product with the same productID doesn't exist, add the new product
-      this.products.push(newProduct);
-    }
+    this.products.push(newProduct);
 
     console.log('New Product:', newProduct);
 
-    // Reset form fields
+    // Reset form fields and image preview
     this.resetForm();
   }
 
@@ -47,23 +40,39 @@ export class AdminPage {
     this.productID = product.id;
     this.productDescription = product.description;
     this.price = product.price;
+    this.imagePreview = product.image; // Display image preview of the selected product
   }
 
   deleteProduct(productID: string) {
     // Find index of product with given productID
     const index = this.products.findIndex(product => product.id === productID);
-  
+
     if (index !== -1) {
       // If product with given productID exists, remove it from the array
       this.products.splice(index, 1);
     }
-  }  
+  }
+
+  onFileChange(event: any) {
+    // Get selected file
+    const file = event.target.files[0];
+
+    if (file) {
+      // Read file as data URL for image preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
   private resetForm() {
-    // Reset form fields
+    // Reset form fields and image preview
     this.productName = '';
     this.productID = '';
     this.productDescription = '';
     this.price = 0;
+    this.imagePreview = '';
   }
 }
