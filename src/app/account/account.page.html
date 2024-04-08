@@ -19,4 +19,33 @@
   <div>
     <p>Welcome, {{ username }}!</p>
   </div>
+
+  <form (ngSubmit)="submitForm()">
+    <ion-item>
+      <ion-label position="floating">Username</ion-label>
+      <ion-input type="text" [(ngModel)]="username" name="username" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Address</ion-label>
+      <ion-textarea [(ngModel)]="address" name="address" rows="3" required></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">New Password</ion-label>
+      <ion-input type="password" [(ngModel)]="newPassword" name="newPassword" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Confirm Password</ion-label>
+      <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit">Save Changes</ion-button>
+  </form>
 </ion-content>
