@@ -1,0 +1,28 @@
+<!-- delete-confirmation-modal.component.html -->
+
+<ion-content>
+  <div class="modal-wrapper">
+    <div class="modal-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Confirmation</ion-title>
+          <ion-buttons slot="end">
+            <ion-button class="close-button" (click)="closeModal()">
+              <ion-icon slot="icon-only" name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      
+      <!-- Modal content -->
+      <ion-list>
+        <ion-item>
+          Are you sure you want to delete this product?
+        </ion-item>
+        <ion-item lines="none">
+          <ion-button expand="block" (click)="confirmDelete()">Yes, Delete</ion-button>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

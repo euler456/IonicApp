@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { DeleteConfirmationModalComponent } from '../delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
   selector: 'app-admin',
@@ -15,7 +17,27 @@ export class AdminPage {
 
   products: any[] = [];
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
+
+  async deleteProduct(productID: string) {
+    const modal = await this.modalController.create({
+      component: DeleteConfirmationModalComponent,
+      componentProps: {
+        // You can pass any data to the modal component if needed
+      }
+    });
+
+    modal.onDidDismiss().then((data) => {
+      if (data && data.data && data.data.confirmed) {
+        const index = this.products.findIndex(product => product.id === productID);
+        if (index !== -1) {
+          this.products.splice(index, 1);
+        }
+      }
+    });
+
+    return await modal.present();
+  }
 
   createProduct() {
     const newProduct = {
@@ -41,16 +63,6 @@ export class AdminPage {
     this.productDescription = product.description;
     this.price = product.price;
     this.imagePreview = product.image; // Display image preview of the selected product
-  }
-
-  deleteProduct(productID: string) {
-    // Find index of product with given productID
-    const index = this.products.findIndex(product => product.id === productID);
-
-    if (index !== -1) {
-      // If product with given productID exists, remove it from the array
-      this.products.splice(index, 1);
-    }
   }
 
   onFileChange(event: any) {
