@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
@@ -10,7 +11,7 @@ import { DeleteConfirmationModalModule } from './delete-confirmation-modal/delet
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,DeleteConfirmationModalModule ],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,DeleteConfirmationModalModule,IonicStorageModule.forRoot() ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },Storage ],
   bootstrap: [AppComponent],
 })

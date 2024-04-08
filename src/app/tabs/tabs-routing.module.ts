@@ -11,10 +11,7 @@ const routes: Routes = [
         path: 'account',
         loadChildren: () => import('../account/account.module').then(m => m.AccountPageModule)
       },
-      {
-        path: 'product',
-        loadChildren: () => import('../product-listing/product-listing.module').then(m => m.ProductListingPageModule)
-      },
+
       {
         path: 'tab1',
         loadChildren: () => import('../Homepage/tab1.module').then(m => m.HomePageModule)
@@ -40,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/tab2',
     pathMatch: 'full'
   }
 ];

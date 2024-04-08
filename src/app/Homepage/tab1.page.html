@@ -13,5 +13,16 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Home page"></app-explore-container>
+  <ion-list>
+    <ion-item *ngFor="let product of products">
+      <ion-thumbnail slot="start">
+        <ion-img [src]="product.image" alt="Product Image"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h2>Name:{{ product.name }}</h2>
+        <p>Description:{{ product.description }}</p>
+        <p>Price: {{ product.price }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

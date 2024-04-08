@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DeleteConfirmationModalComponent } from '../delete-confirmation-modal/delete-confirmation-modal.component';
+import { Storage } from '@ionic/storage-angular'; // Import Ionic Storage
 
 @Component({
   selector: 'app-admin',
@@ -17,14 +18,21 @@ export class AdminPage {
 
   products: any[] = [];
 
-  constructor(private modalController: ModalController) { }
+  constructor(
+    private modalController: ModalController,
+    private storage: Storage // Inject Ionic Storage
+  ) { }
+
+  // Call this method when the component initializes
+  async ngOnInit() {
+    await this.storage.create(); // Initialize Ionic Storage
+    this.loadProducts(); // Load products from storage
+  }
 
   async deleteProduct(productID: string) {
     const modal = await this.modalController.create({
       component: DeleteConfirmationModalComponent,
-      componentProps: {
-        // You can pass any data to the modal component if needed
-      }
+      componentProps: {}
     });
 
     modal.onDidDismiss().then((data) => {
@@ -32,6 +40,7 @@ export class AdminPage {
         const index = this.products.findIndex(product => product.id === productID);
         if (index !== -1) {
           this.products.splice(index, 1);
+          this.saveProducts(); // Save updated products after deletion
         }
       }
     });
@@ -40,20 +49,40 @@ export class AdminPage {
   }
 
   createProduct() {
-    const newProduct = {
-      name: this.productName,
-      id: this.productID,
-      description: this.productDescription,
-      price: this.price,
-      image: this.imagePreview // Assign image preview URL to product
-    };
-
-    this.products.push(newProduct);
-
-    console.log('New Product:', newProduct);
-
-    // Reset form fields and image preview
+    const existingProductIndex = this.products.findIndex(product => product.id === this.productID);
+    if (existingProductIndex !== -1) {
+      // If product with the same ID already exists, update its data
+      this.products[existingProductIndex].name = this.productName;
+      this.products[existingProductIndex].description = this.productDescription;
+      this.products[existingProductIndex].price = this.price;
+      this.products[existingProductIndex].image = this.imagePreview;
+    } else {
+      // If product with the same ID doesn't exist, create a new product
+      const newProduct = {
+        name: this.productName,
+        id: this.productID,
+        description: this.productDescription,
+        price: this.price,
+        image: this.imagePreview
+      };
+      this.products.push(newProduct);
+    }
+  
+    this.saveProducts(); // Save updated products
     this.resetForm();
+  }
+  
+  private async loadProducts() {
+    // Retrieve products from storage
+    const storedProducts = await this.storage.get('products');
+    if (storedProducts) {
+      this.products = storedProducts;
+    }
+  }
+
+  private saveProducts() {
+    // Save products into storage
+    this.storage.set('products', this.products);
   }
 
   editProduct(product: any) {
