@@ -25,6 +25,7 @@
     <ion-label>{{ product.id }}</ion-label>
     <ion-label>{{ product.description }}</ion-label>
     <ion-label>{{ product.price }}</ion-label>
+    <ion-label>{{ product.creationTime }}</ion-label>
     <ion-button (click)="editProduct(product)">Edit</ion-button>
     <ion-button (click)="deleteProduct(product.id)">Delete</ion-button>
   </ion-item>
@@ -56,6 +57,12 @@
     <ion-label position="floating">Price</ion-label>
     <ion-input type="number" [(ngModel)]="price"></ion-input>
   </ion-item>
+
+  <!-- Display creation time -->
+  <ion-item lines="full">
+    <ion-label position="floating">Creation Time</ion-label>
+    <input type="datetime-local" [(ngModel)]="creationTime">
+  </ion-item>  
 
   <ion-button expand="full" (click)="createProduct()">Create Product</ion-button>
 </ion-content>

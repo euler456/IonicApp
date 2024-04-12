@@ -14,7 +14,8 @@ export class AdminPage {
   productID: string = '';
   productDescription: string = '';
   price: number = 0;
-  imagePreview: string=''; // Variable to store image preview URL
+  imagePreview: string = ''; // Variable to store image preview URL
+  creationTime: string = ''; // Variable to store creation time
 
   products: any[] = [];
 
@@ -56,6 +57,7 @@ export class AdminPage {
       this.products[existingProductIndex].description = this.productDescription;
       this.products[existingProductIndex].price = this.price;
       this.products[existingProductIndex].image = this.imagePreview;
+      this.products[existingProductIndex].creationTime = this.creationTime;
     } else {
       // If product with the same ID doesn't exist, create a new product
       const newProduct = {
@@ -63,15 +65,16 @@ export class AdminPage {
         id: this.productID,
         description: this.productDescription,
         price: this.price,
-        image: this.imagePreview
+        image: this.imagePreview,
+        creationTime: this.creationTime
       };
       this.products.push(newProduct);
     }
-  
+
     this.saveProducts(); // Save updated products
     this.resetForm();
   }
-  
+
   private async loadProducts() {
     // Retrieve products from storage
     const storedProducts = await this.storage.get('products');
@@ -92,6 +95,7 @@ export class AdminPage {
     this.productDescription = product.description;
     this.price = product.price;
     this.imagePreview = product.image; // Display image preview of the selected product
+    this.creationTime = product.creationTime; // Display creation time of the selected product
   }
 
   onFileChange(event: any) {
@@ -115,5 +119,6 @@ export class AdminPage {
     this.productDescription = '';
     this.price = 0;
     this.imagePreview = '';
+    this.creationTime = '';
   }
 }
