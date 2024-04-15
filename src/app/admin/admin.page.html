@@ -1,3 +1,4 @@
+<!-- admin.page.html -->
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -17,52 +18,55 @@
   </ion-header>
 
   <!-- Display list of products with edit and delete buttons -->
-  <ion-item *ngFor="let product of products" lines="full">
-    <ion-thumbnail slot="start">
-      <img [src]="product.image" *ngIf="product.image" alt="Product Image">
-    </ion-thumbnail>
-    <ion-label>{{ product.name }}</ion-label>
-    <ion-label>{{ product.id }}</ion-label>
-    <ion-label>{{ product.description }}</ion-label>
-    <ion-label>{{ product.price }}</ion-label>
-    <ion-label>{{ product.creationTime }}</ion-label>
-    <ion-button (click)="editProduct(product)">Edit</ion-button>
-    <ion-button (click)="deleteProduct(product.id)">Delete</ion-button>
-  </ion-item>
+  <ion-list>
+    <ion-item *ngFor="let product of products" lines="full">
+      <ion-thumbnail slot="start">
+        <img [src]="product.image" *ngIf="product.image" alt="Product Image">
+      </ion-thumbnail>
+      <ion-label>{{ product.name }}</ion-label>
+      <ion-label>{{ product.id }}</ion-label>
+      <ion-label>{{ product.description }}</ion-label>
+      <ion-label>{{ product.price }}</ion-label>
+      <ion-label>{{ product.creationTime }}</ion-label>
+      <ion-button (click)="editProduct(product)">Edit</ion-button>
+      <ion-button (click)="deleteProduct(product.id)">Delete</ion-button>
+    </ion-item>
+  </ion-list>
 
   <!-- Form to add new products -->
-  <ion-item lines="full">
-    <ion-thumbnail slot="start" *ngIf="imagePreview">
-      <img [src]="imagePreview" alt="Product Image">
-    </ion-thumbnail>
-    <ion-input type="file" (change)="onFileChange($event)" accept="image/*"></ion-input>
-  </ion-item>
+  <ion-list>
+    <ion-item lines="full">
+      <ion-thumbnail slot="start" *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Product Image">
+      </ion-thumbnail>
+      <ion-input type="file" (change)="onFileChange($event)" accept="image/*"></ion-input>
+    </ion-item>
 
-  <ion-item lines="full">
-    <ion-label position="floating">Product Name</ion-label>
-    <ion-input type="text" [(ngModel)]="productName"></ion-input>
-  </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating">Product Name</ion-label>
+      <ion-input type="text" [(ngModel)]="productName"></ion-input>
+    </ion-item>
 
-  <ion-item lines="full">
-    <ion-label position="floating">Product ID</ion-label>
-    <ion-input type="text" [(ngModel)]="productID"></ion-input>
-  </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating">Product ID</ion-label>
+      <ion-input type="text" [(ngModel)]="productID"></ion-input>
+    </ion-item>
 
-  <ion-item lines="full">
-    <ion-label position="floating">Product Description</ion-label>
-    <ion-input type="text" [(ngModel)]="productDescription"></ion-input>
-  </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating">Product Description</ion-label>
+      <ion-input type="text" [(ngModel)]="productDescription"></ion-input>
+    </ion-item>
 
-  <ion-item lines="full">
-    <ion-label position="floating">Price</ion-label>
-    <ion-input type="number" [(ngModel)]="price"></ion-input>
-  </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating">Price</ion-label>
+      <ion-input type="number" [(ngModel)]="price"></ion-input>
+    </ion-item>
 
-  <!-- Display creation time -->
-  <ion-item lines="full">
-    <ion-label position="floating">Creation Time</ion-label>
-    <input type="datetime-local" [(ngModel)]="creationTime">
-  </ion-item>  
+    <ion-item lines="full">
+      <ion-label position="floating">Creation Time</ion-label>
+      <input type="datetime-local" [(ngModel)]="creationTime">
+    </ion-item>  
+  </ion-list>
 
   <ion-button expand="full" (click)="createProduct()">Create Product</ion-button>
 </ion-content>

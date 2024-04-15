@@ -1,3 +1,4 @@
+// admin.page.ts
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DeleteConfirmationModalComponent } from '../delete-confirmation-modal/delete-confirmation-modal.component';
