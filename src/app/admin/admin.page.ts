@@ -1,8 +1,6 @@
-// admin.page.ts
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { DeleteConfirmationModalComponent } from '../delete-confirmation-modal/delete-confirmation-modal.component';
-import { Storage } from '@ionic/storage-angular'; // Import Ionic Storage
+import { ModalController, AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-admin',
@@ -15,39 +13,45 @@ export class AdminPage {
   productID: string = '';
   productDescription: string = '';
   price: number = 0;
-  imagePreview: string = ''; // Variable to store image preview URL
-  creationTime: string = ''; // Variable to store creation time
-
+  imagePreview: string = '';
+  creationTime: string = '';
+  showModal: boolean = false;
   products: any[] = [];
 
   constructor(
     private modalController: ModalController,
-    private storage: Storage // Inject Ionic Storage
+    private alertController: AlertController,
+    private storage: Storage
   ) { }
 
-  // Call this method when the component initializes
   async ngOnInit() {
-    await this.storage.create(); // Initialize Ionic Storage
-    this.loadProducts(); // Load products from storage
+    await this.storage.create(); 
+    this.loadProducts(); 
   }
 
   async deleteProduct(productID: string) {
-    const modal = await this.modalController.create({
-      component: DeleteConfirmationModalComponent,
-      componentProps: {}
-    });
-
-    modal.onDidDismiss().then((data) => {
-      if (data && data.data && data.data.confirmed) {
-        const index = this.products.findIndex(product => product.id === productID);
-        if (index !== -1) {
-          this.products.splice(index, 1);
-          this.saveProducts(); // Save updated products after deletion
+    const alert = await this.alertController.create({
+      header: 'Confirmation',
+      message: 'Are you sure you want to delete this product?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Delete',
+          handler: () => {
+            const index = this.products.findIndex(product => product.id === productID);
+            if (index !== -1) {
+              this.products.splice(index, 1);
+              this.saveProducts();
+            }
+          }
         }
-      }
+      ]
     });
 
-    return await modal.present();
+    await alert.present();
   }
 
   createProduct() {
@@ -76,19 +80,6 @@ export class AdminPage {
     this.resetForm();
   }
 
-  private async loadProducts() {
-    // Retrieve products from storage
-    const storedProducts = await this.storage.get('products');
-    if (storedProducts) {
-      this.products = storedProducts;
-    }
-  }
-
-  private saveProducts() {
-    // Save products into storage
-    this.storage.set('products', this.products);
-  }
-
   editProduct(product: any) {
     // Populate form fields with selected product's details for editing
     this.productName = product.name;
@@ -111,6 +102,27 @@ export class AdminPage {
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  private async loadProducts() {
+    // Retrieve products from storage
+    const storedProducts = await this.storage.get('products');
+    if (storedProducts) {
+      this.products = storedProducts;
+    }
+  }
+
+  private saveProducts() {
+    // Save products into storage
+    this.storage.set('products', this.products);
+  }
+
+  async closeModal() {
+    this.showModal = false;
+  }
+
+  async confirmDelete() {
+    this.showModal = false;
   }
 
   private resetForm() {

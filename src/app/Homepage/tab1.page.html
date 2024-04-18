@@ -7,24 +7,26 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- Map block to display the location of the store -->
-  <div class="map-container">
-    <img src="assets/map.jpg" alt="Store Location Map">
+  <div class="content-container">
+    <!-- List of products -->
+    <ion-list>
+      <ion-item *ngFor="let product of products">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="product.image" alt="Product Image"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ product.name }}</h2>
+          <p>{{ product.description }}</p>
+          <p>Price: {{ product.price }}</p>
+          <ion-button (click)="addToCart(product)" color="primary" size="small">Add to Cart</ion-button>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <!-- Map block to display the location of the store -->
+    <div class="map-container">
+      <h3>Shop Location</h3>
+      <img src="assets/map.jpg" alt="Store Location Map">
+    </div>
   </div>
-
-  <!-- List of products -->
-  <ion-list>
-    <ion-item *ngFor="let product of products">
-      <ion-thumbnail slot="start">
-        <ion-img [src]="product.image" alt="Product Image"></ion-img>
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ product.name }}</h2>
-        <p>{{ product.description }}</p>
-        <p>Price: {{ product.price }}</p>
-        <ion-button (click)="addToCart(product)" color="primary" size="small">Add to Cart</ion-button>
-      </ion-label>
-    </ion-item>
-  </ion-list>
 </ion-content>
-
