@@ -9,7 +9,7 @@ import { Storage } from '@ionic/storage';
 })
 export class Tab2Page {
   count: number = 0;
-  username: string = ''; // Property to store username entered by the user
+  username: string = '';
 
   constructor(private router: Router, private storage: Storage) {
     // Initialize the database
@@ -28,7 +28,6 @@ export class Tab2Page {
     this.incrementCounter();
     // Save username in storage
     this.storage.set('username', this.username).then(() => {
-      // Navigate to AccountPage
       this.router.navigateByUrl('/tabs/account');
     }).catch(error => {
       console.error('Error saving username to storage:', error);

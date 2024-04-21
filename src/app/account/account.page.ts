@@ -16,19 +16,15 @@ export class AccountPage implements OnInit {
   constructor(private storage: Storage) { }
 
   ngOnInit() {
-    // Retrieve user information from storage
     this.storage.get('username').then((username) => {
       this.username = username;
     }).catch(error => {
       console.error('Error retrieving username from storage:', error);
     });
 
-    // You can similarly retrieve other user information like email, address, etc. from storage
   }
 
   submitForm() {
-    // Handle form submission here
     console.log('Form submitted');
-    // You can perform validation and save/update user information
   }
 }

@@ -76,7 +76,7 @@ export class AdminPage {
       this.products.push(newProduct);
     }
 
-    this.saveProducts(); // Save updated products
+    this.saveProducts();
     this.resetForm();
   }
 
@@ -86,12 +86,11 @@ export class AdminPage {
     this.productID = product.id;
     this.productDescription = product.description;
     this.price = product.price;
-    this.imagePreview = product.image; // Display image preview of the selected product
-    this.creationTime = product.creationTime; // Display creation time of the selected product
+    this.imagePreview = product.image; 
+    this.creationTime = product.creationTime;
   }
 
   onFileChange(event: any) {
-    // Get selected file
     const file = event.target.files[0];
 
     if (file) {
@@ -113,7 +112,6 @@ export class AdminPage {
   }
 
   private saveProducts() {
-    // Save products into storage
     this.storage.set('products', this.products);
   }
 
@@ -126,7 +124,6 @@ export class AdminPage {
   }
 
   private resetForm() {
-    // Reset form fields and image preview
     this.productName = '';
     this.productID = '';
     this.productDescription = '';

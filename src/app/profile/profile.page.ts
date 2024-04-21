@@ -15,7 +15,6 @@ export class ProfilePage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // Fetch user profile data here and assign to variables like username, email, address, etc.
   }
 
   updateProfile() {
@@ -25,6 +24,5 @@ export class ProfilePage implements OnInit {
     console.log("Address: ", this.address);
     console.log("New Password: ", this.newPassword);
     console.log("Confirm Password: ", this.confirmPassword);
-    // You can send this data to your backend API for updating the user's profile
   }
 }
