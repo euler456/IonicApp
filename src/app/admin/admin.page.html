@@ -59,13 +59,14 @@
 
     <ion-item lines="full">
       <ion-label position="floating">Price</ion-label>
-      <ion-input type="number" [(ngModel)]="price"></ion-input>
-    </ion-item>
+      <ion-input type="number" [(ngModel)]="price" maxlength="8"></ion-input>
+    </ion-item>    
 
     <ion-item lines="full">
       <ion-label position="floating">Creation Time</ion-label>
-      <input type="datetime-local" [(ngModel)]="creationTime">
-    </ion-item>  
+      <ion-datetime displayFormat="YYYY-MM-DDTHH:mm" [(ngModel)]="creationTime"></ion-datetime>
+    </ion-item>
+    
   </ion-list>
 
   <ion-button expand="full" (click)="createProduct()">Create Product</ion-button>

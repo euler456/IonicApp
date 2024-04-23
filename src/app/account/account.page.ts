@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -13,9 +14,13 @@ export class AccountPage implements OnInit {
   newPassword: string = '';
   confirmPassword: string = '';
 
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      const id = params['id']; 
+    
+    });
     this.storage.get('username').then((username) => {
       this.username = username;
     }).catch(error => {
