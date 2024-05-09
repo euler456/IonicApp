@@ -28,7 +28,7 @@ export class Tab2Page {
     this.incrementCounter();
     // Save username in storage
     this.storage.set('username', this.username).then(() => {
-      this.router.navigateByUrl('/tabs/account');
+      this.router.navigateByUrl('/tabs/tab1');
     }).catch(error => {
       console.error('Error saving username to storage:', error);
     });
