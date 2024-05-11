@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
   loadGoogleMaps(callback: () => void) {
       // Create a script element for the Google Maps API
       const script = document.createElement('script');
-      script.src = 'https://maps.google.com/maps/api/js?key=AIzaSyDzo_IdgmlKu8OSfI0AJq5llEdUnMLLYZ4';
+      script.src = 'https://maps.google.com/maps/api/js?key=';
       script.onload = callback; // Call the callback function when the script is loaded
       document.body.appendChild(script); // Append the script element to the document body
   }
