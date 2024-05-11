@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { NavController, ModalController } from '@ionic/angular';
-import { GoogleMap, GoogleMaps, GoogleMapsEvent, LatLng, Marker } from '@ionic-native/google-maps';
-
+declare var google: any;
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -11,7 +10,7 @@ import { GoogleMap, GoogleMaps, GoogleMapsEvent, LatLng, Marker } from '@ionic-n
 export class HomePage implements OnInit {
   products: any[] = [];
   isFirstLaunch: boolean = false;
-  map: GoogleMap | undefined;
+  map: any;
 
   constructor(
     private storage: Storage,
@@ -22,40 +21,43 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.loadProducts();
     this.checkFirstLaunch();
-    this.loadMapAsync();
+    this.loadGoogleMaps(() => {
+      // Once the Google Maps API is loaded, call loadMap()
+      this.loadMapAsync();
+    });  }
+
+  loadGoogleMaps(callback: () => void) {
+      // Create a script element for the Google Maps API
+      const script = document.createElement('script');
+      script.src = 'https://maps.google.com/maps/api/js?key=AIzaSyDzo_IdgmlKu8OSfI0AJq5llEdUnMLLYZ4';
+      script.onload = callback; // Call the callback function when the script is loaded
+      document.body.appendChild(script); // Append the script element to the document body
   }
-  async loadMapAsync() {
-    await this.loadMap(); 
+  
+  loadMapAsync() {
+      this.loadMap();
   }
-  async loadMap() {
+
+  loadMap() {
     try {
       const mapOptions = {
-        camera: {
-          target: new LatLng(40.7128, -74.0060),
-          zoom: 12,
-        },
+        center: { lat: 40.7128, lng: -74.0060 },
+        zoom: 12
       };
 
-      this.map = GoogleMaps.create('map_canvas', mapOptions);
+      this.map = new google.maps.Map(document.getElementById('map_canvas') as HTMLElement, mapOptions);
 
-      // Add pins representing locations
+      // Add markers for locations
       const locations = [
         { lat: 40.7128, lng: -74.0060, title: 'New York City' },
         // Add more locations as needed
       ];
 
       locations.forEach((location) => {
-        const markerOptions = {
+        new google.maps.Marker({
           position: location,
-          title: location.title,
-        };
-
-        this.map?.addMarker(markerOptions).then((marker: Marker) => {
-          marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-            // Navigate to a different screen when a pin is clicked
-            // You can implement this logic here
-            console.log('Marker clicked:', location.title);
-          });
+          map: this.map,
+          title: location.title
         });
       });
     } catch (error) {
