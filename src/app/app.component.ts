@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private storage: Storage) {
+    // Create the database on app initialization
+    this.createDatabase();
+  }
+
+  async createDatabase() {
+    try {
+      // Create the database if it doesn't exist
+      await this.storage.create();
+    } catch (error) {
+      console.error('Error creating database:', error);
+    }
+  }
 }

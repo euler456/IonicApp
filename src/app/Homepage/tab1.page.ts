@@ -22,7 +22,6 @@ export class HomePage implements OnInit {
     this.loadProducts();
     this.checkFirstLaunch();
     this.loadGoogleMaps(() => {
-      // Once the Google Maps API is loaded, call loadMap()
       this.loadMapAsync();
     });  }
 
@@ -30,8 +29,8 @@ export class HomePage implements OnInit {
       // Create a script element for the Google Maps API
       const script = document.createElement('script');
       script.src = 'https://maps.google.com/maps/api/js?key=';
-      script.onload = callback; // Call the callback function when the script is loaded
-      document.body.appendChild(script); // Append the script element to the document body
+      script.onload = callback; 
+      document.body.appendChild(script); 
   }
   
   loadMapAsync() {
@@ -41,23 +40,27 @@ export class HomePage implements OnInit {
   loadMap() {
     try {
       const mapOptions = {
-        center: { lat: 40.7128, lng: -74.0060 },
+        center: { lat: -27.555264, lng: 153.033519 },
         zoom: 12
       };
-
+  
       this.map = new google.maps.Map(document.getElementById('map_canvas') as HTMLElement, mapOptions);
-
-      // Add markers for locations
+  
       const locations = [
-        { lat: 40.7128, lng: -74.0060, title: 'New York City' },
-        // Add more locations as needed
+        { lat: -27.555264, lng: 153.033519, title: 'Griffith University Nathan Campus', info: 'Information about Griffith University Nathan Campus' }
       ];
-
+  
       locations.forEach((location) => {
-        new google.maps.Marker({
+        const marker = new google.maps.Marker({
           position: location,
           map: this.map,
           title: location.title
+        });
+  
+        // Add click event listener to the marker
+        marker.addListener('click', () => {
+          // Navigate to PinInfoPage and pass the information
+          this.navCtrl.navigateForward(`/pin-info/${location.title}/${location.info}`);
         });
       });
     } catch (error) {

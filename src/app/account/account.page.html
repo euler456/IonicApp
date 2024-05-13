@@ -20,32 +20,32 @@
     <p>Welcome, {{ username }}!</p>
   </div>
 
-  <form (ngSubmit)="submitForm()">
+  <!-- Settings Content -->
+  <ion-content>
+    <form> 
+
+    <!-- Text input for Name -->
     <ion-item>
-      <ion-label position="floating">Username</ion-label>
-      <ion-input type="text" [(ngModel)]="username" name="username" required></ion-input>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input type="text" [(ngModel)]="name" name="name" (ionChange)="updateName()"></ion-input>
     </ion-item>
 
+    <!-- Toggle for Show Notifications -->
     <ion-item>
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+      <ion-label>Show Notifications</ion-label>
+      <ion-toggle [(ngModel)]="showNotifications" name="showNotifications" (ionChange)="updateShowNotifications()"></ion-toggle>
     </ion-item>
 
+    <!-- Date time input for Reminder -->
     <ion-item>
-      <ion-label position="floating">Address</ion-label>
-      <ion-textarea [(ngModel)]="address" name="address" rows="3" required></ion-textarea>
+      <ion-label position="floating">Reminder</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="reminder" name="reminder" (ionChange)="updateReminder()"></ion-datetime>
     </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">New Password</ion-label>
-      <ion-input type="password" [(ngModel)]="newPassword" name="newPassword" required></ion-input>
-    </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Confirm Password</ion-label>
-      <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required></ion-input>
-    </ion-item>
+      <!-- Submit Button -->
+      <ion-button expand="block" type="submit">Save Changes</ion-button>
+    </form>
+  </ion-content>
 
-    <ion-button expand="block" type="submit">Save Changes</ion-button>
-  </form>
 </ion-content>
